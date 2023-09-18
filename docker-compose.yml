@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_bipip
+    restart: always
+    environment:
+      POSTGRES_USER: franco
+      POSTGRES_PASSWORD: 147258
+      POSTGRES_DB: bipipbankingsystem
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - '5454:5432'
