@@ -1,13 +1,23 @@
-import { Module } from '@nestjs/common';
+import { Inject, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { sequelizeProviders } from './common/database/sequelize.providers';
+import {
+  sequelizeProviders,
+  setupSequelize,
+} from './common/database/sequelize.providers';
+import { UserModule } from './user/user.module';
+import { Sequelize } from 'sequelize-typescript';
+import { AccountModule } from './account/account.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true })],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), UserModule, AccountModule],
   controllers: [AppController],
   providers: [AppService, ...sequelizeProviders],
   exports: [...sequelizeProviders],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(@Inject('SEQUELIZE') private sequelize: Sequelize) {
+    setupSequelize(sequelize);
+  }
+}
