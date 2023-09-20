@@ -6,7 +6,12 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'users' })
+@Table({
+  tableName: 'users',
+  defaultScope: {
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+  },
+})
 export default class User extends Model {
   @PrimaryKey
   @Column({

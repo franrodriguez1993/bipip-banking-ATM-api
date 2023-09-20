@@ -6,7 +6,12 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'type_accounts' })
+@Table({
+  tableName: 'type_accounts',
+  defaultScope: {
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+  },
+})
 export default class TypeAccount extends Model {
   @PrimaryKey
   @Column({
