@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
-import { CreditcardService } from './creditcard.service';
 import { CreditcardController } from './creditcard.controller';
 import CreditCardRepository from './repository/creditcard.repository';
+import FindOneCreditcardService from './services/FindOne-creditcard';
+import UpdateCreditcardService from './services/Update-creditcard';
 
 @Module({
   controllers: [CreditcardController],
-  providers: [CreditcardService, CreditCardRepository],
+  providers: [
+    CreditCardRepository,
+    FindOneCreditcardService,
+    UpdateCreditcardService,
+  ],
 })
 export class CreditcardModule {}

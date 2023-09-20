@@ -1,13 +1,15 @@
 import { Controller, Body, Patch, Param } from '@nestjs/common';
-import { CreditcardService } from './creditcard.service';
 import { changePassBodyDTO } from './dto/update-creditcard.dto';
+import UpdateCreditcardService from './services/Update-creditcard';
 
 @Controller('creditcard')
 export class CreditcardController {
-  constructor(private readonly creditcardService: CreditcardService) {}
+  constructor(
+    private readonly updateCreditcardService: UpdateCreditcardService,
+  ) {}
 
   @Patch(':nc')
   update(@Param('nc') number_card: string, @Body() data: changePassBodyDTO) {
-    return this.creditcardService.update(number_card, data.password);
+    return this.updateCreditcardService.run(number_card, data.password);
   }
 }

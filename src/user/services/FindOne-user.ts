@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import UserRepository from './repository/user.repository';
-import User from './entities/user.entity';
+import UserRepository from '../repository/user.repository';
+import User from '../entities/user.entity';
 
 @Injectable()
-export class UserService {
+export default class FindOneUserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async findOne(id: string): Promise<User> {
+  async run(id: string): Promise<User> {
     const user = await this.userRepository.getById(id);
     if (!user) throw new NotFoundException('User not found');
     return user;
