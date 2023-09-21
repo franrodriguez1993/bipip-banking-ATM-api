@@ -7,6 +7,7 @@ import DeleteTransactionService from './services/Delete-transaction';
 import DepositTransactionService from './services/Deposit-transaction';
 import ExtractionTransactionService from './services/Extraction-transaction';
 import { AuthModule } from '../auth/auth.module';
+import ListTransactionService from './services/List-transaction';
 
 @Module({
   imports: [CreditcardModule, AccountModule, AuthModule],
@@ -16,6 +17,7 @@ import { AuthModule } from '../auth/auth.module';
     DeleteTransactionService,
     DepositTransactionService,
     ExtractionTransactionService,
+    ListTransactionService,
   ],
 })
 export class TransactionModule {}

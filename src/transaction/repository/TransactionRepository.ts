@@ -1,3 +1,5 @@
+import paginatedDataList from '../../common/interface/paginatedDataList';
+import PaginationManager from '../../common/utils/PaginationManager';
 import { CreateTransactionDto } from '../dto/create-transaction.dto';
 import Transaction from '../entities/transaction.entity';
 import TransacionInterface from '../interfaces/transaction.interface';
@@ -12,6 +14,23 @@ export default class TransactionRepository {
       type_transaction: data.type_transaction,
       date: data.date,
     });
+  }
+
+  /**  LIST TRANSACTIONS  **/
+  async list(
+    id_creditcard: string,
+    page: number,
+    size: number,
+  ): Promise<paginatedDataList> {
+    const { limit, offset } = PaginationManager.pageDetermination(page, size);
+
+    const list = await Transaction.findAndCountAll({
+      where: { id_creditcard },
+      limit,
+      offset,
+    });
+
+    return PaginationManager.paginatedData(list, page, limit);
   }
 
   /**  DELETE TRANSACTION  **/
