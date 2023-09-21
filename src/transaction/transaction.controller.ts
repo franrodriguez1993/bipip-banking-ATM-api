@@ -1,8 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 
 import RequestTransactionDTO from './dto/request-transaction.dto';
 import DepositTransactionService from './services/Deposit-transaction';
 import ExtractionTransactionService from './services/Extraction-transaction';
+import AuthGuard from '../auth/guard/auth.guard';
+import RequestWithUser from '../common/interface/requestWithUser';
 
 @Controller('transaction')
 export class TransactionController {
@@ -12,12 +14,16 @@ export class TransactionController {
   ) {}
 
   @Post('/deposit')
-  deposit(@Body() data: RequestTransactionDTO) {
+  @UseGuards(AuthGuard)
+  deposit(@Req() req: RequestWithUser, @Body() data: RequestTransactionDTO) {
+    data.number_card = req.user.number_card;
     return this.depositTransactionService.run(data);
   }
 
   @Post('/extraction')
-  extraction(@Body() data: RequestTransactionDTO) {
+  @UseGuards(AuthGuard)
+  extraction(@Req() req: RequestWithUser, @Body() data: RequestTransactionDTO) {
+    data.number_card = req.user.number_card;
     return this.extractionTransactionService.run(data);
   }
 }

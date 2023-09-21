@@ -11,9 +11,10 @@ import { Sequelize } from 'sequelize-typescript';
 import { AccountModule } from './account/account.module';
 import { CreditcardModule } from './creditcard/creditcard.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), UserModule, AccountModule, CreditcardModule, TransactionModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), UserModule, AccountModule, CreditcardModule, TransactionModule, AuthModule],
   controllers: [AppController],
   providers: [AppService, ...sequelizeProviders],
   exports: [...sequelizeProviders],

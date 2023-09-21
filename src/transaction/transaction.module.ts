@@ -6,9 +6,10 @@ import TransactionRepository from './repository/TransactionRepository';
 import DeleteTransactionService from './services/Delete-transaction';
 import DepositTransactionService from './services/Deposit-transaction';
 import ExtractionTransactionService from './services/Extraction-transaction';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [CreditcardModule, AccountModule],
+  imports: [CreditcardModule, AccountModule, AuthModule],
   controllers: [TransactionController],
   providers: [
     TransactionRepository,
