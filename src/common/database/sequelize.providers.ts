@@ -5,6 +5,7 @@ import Address from '../../user/entities/address.entity';
 import TypeAccount from '../../account/entities/typeaccount.entity';
 import Account from '../../account/entities/account.entity';
 import Creditcard from '../../creditcard/entities/creditcard.entity';
+import Transaction from '../../transaction/entities/transaction.entity';
 
 export const sequelizeProviders = [
   {
@@ -19,7 +20,14 @@ export const sequelizeProviders = [
         database: environmentVariables.database.db_name,
         logging: false,
       });
-      sequelize.addModels([User, Address, TypeAccount, Account, Creditcard]),
+      sequelize.addModels([
+        User,
+        Address,
+        TypeAccount,
+        Account,
+        Creditcard,
+        Transaction,
+      ]),
         await sequelize.sync();
       return sequelize;
     },
@@ -46,4 +54,8 @@ export const setupSequelize = (sequelize: Sequelize) => {
   //account-creditcard
   Account.hasMany(Creditcard, { foreignKey: 'number_account' });
   Creditcard.belongsTo(Account, { foreignKey: 'number_account' });
+
+  //creditcard-transaction:
+  Creditcard.hasMany(Transaction, { foreignKey: 'id_creditcard' });
+  Transaction.belongsTo(Creditcard, { foreignKey: 'id_creditcard' });
 };

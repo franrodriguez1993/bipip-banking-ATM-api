@@ -11,5 +11,6 @@ import UpdateCreditcardService from './services/Update-creditcard';
     FindOneCreditcardService,
     UpdateCreditcardService,
   ],
+  exports: [FindOneCreditcardService],
 })
 export class CreditcardModule {}

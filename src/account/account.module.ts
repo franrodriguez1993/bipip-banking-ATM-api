@@ -21,6 +21,7 @@ import DepositMoneyAccountService from './services/DepositMoney-account';
     GetAllByUserAccountService,
     ExtractionMoneyAccountService,
     DepositMoneyAccountService,
+    AccountRepository,
   ],
 })
 export class AccountModule {}
