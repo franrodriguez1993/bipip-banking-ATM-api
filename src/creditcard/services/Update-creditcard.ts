@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import CreditCardRepository from '../repository/creditcard.repository';
 import HashPasswordManager from '../../common/utils/HashPasswordManager';
 import FindOneCreditcardService from './FindOne-creditcard';
+import CreditCardInterface from '../interfaces/creditcard.interface';
 
 @Injectable()
 export default class UpdateCreditcardService {
@@ -12,7 +13,11 @@ export default class UpdateCreditcardService {
 
   async run(number_card: string, password: string): Promise<string> {
     //check card:
-    await this.findOneCreditcard.run(number_card);
+    const creditcard: CreditCardInterface =
+      await this.findOneCreditcard.run(number_card);
+
+    //compare password:
+    await this.comparePasswords(password, creditcard.password);
 
     //hash pass:
     const hashPass = await HashPasswordManager.hash(password);
@@ -23,5 +28,13 @@ export default class UpdateCreditcardService {
     );
     if (updateResponse[0] === 1) return 'Password changed';
     else return 'Password not changed';
+  }
+
+  private async comparePasswords(pass: string, hashPass: string) {
+    const check = await HashPasswordManager.compare(pass, hashPass);
+    if (check)
+      throw new BadRequestException(
+        'Password is equal to the current Password',
+      );
   }
 }
